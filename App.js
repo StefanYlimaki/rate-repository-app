@@ -4,7 +4,12 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text>
+        I opened up App.js and started working on my app!
+      </Text>
+      <Text>
+        I tried Expo Go on my personal phone and on the simulated Pixel 6
+      </Text>
       <StatusBar style="auto" />
     </View>
   );
