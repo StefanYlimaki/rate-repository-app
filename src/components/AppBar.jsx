@@ -1,34 +1,36 @@
-import { View, StyleSheet, Text } from 'react-native';
-import Constants from 'expo-constants';
+import { View, StyleSheet, Text, Pressable } from "react-native";
+import { Link } from "react-router-native";
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: Constants.statusBarHeight,
-    display: 'flex'
+    display: "flex",
+    flexDirection: 'row'
   },
   appBar: {
     paddingLeft: 5,
     flexGrow: 1,
-    backgroundColor: 'black',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    height: 70
+    backgroundColor: "black",
+    alignItems: "flex-start",
+    padding: 20
   },
   appBarItem: {
     fontSize: 20,
-    color: 'white'
-  }
+    color: "white",
+  },
 });
 
 const AppBar = () => {
-  return(
+  return (
     <View style={styles.container}>
       <View style={styles.appBar}>
-        <Text style={styles.appBarItem}>Repositories</Text>
+        <Link to="/"><Text style={styles.appBarItem}>Repositories</Text></Link>
+      </View>
+      <View style={styles.appBar}>
+        <Link to="/signin"><Text style={styles.appBarItem}>Sign In</Text></Link>
+        
       </View>
     </View>
-  )
-  
+  );
 };
 
 export default AppBar;
