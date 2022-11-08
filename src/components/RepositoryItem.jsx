@@ -1,5 +1,6 @@
 
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet } from 'react-native';
+import Text from './Text';
 
 const RepositoryItem = ({ item }) => {
 
@@ -25,14 +26,6 @@ const RepositoryItem = ({ item }) => {
       height: 70,
       borderRadius: 10
     },
-    fullName: {
-      fontWeight: '700'
-    },
-    description: {
-      fontWeight: '400',
-      color: 'grey',
-      fontSize: 15
-    },
     language: {
       backgroundColor: '#0366d6',
       color: 'white',
@@ -57,8 +50,8 @@ const RepositoryItem = ({ item }) => {
           <View style={styles.flexContainterRow}>
             <Image style={styles.avatar} source={{uri: item.ownerAvatarUrl}}/>
             <View style={styles.flexContainterColumn}>
-              <Text style={styles.fullName}>{item.fullName}</Text>
-              <Text style={styles.description}>{item.description}</Text>
+              <Text fontWeight="bold">{item.fullName}</Text>
+              <Text>{item.description}</Text>
               <View style={styles.flexContainterRow}><Text style={styles.language}>{item.language}</Text></View>
             </View>
           </View>
