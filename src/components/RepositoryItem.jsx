@@ -1,81 +1,120 @@
-
 import { View, Image, StyleSheet } from 'react-native';
+
+import theme from '../theme';
 import Text from './Text';
+import formatInThousands from '../utils/formatInThousands';
 
-const RepositoryItem = ({ item }) => {
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'white',
+    padding: 15,
+  },
+  topContainer: {
+    flexDirection: 'row',
+    marginBottom: 15,
+  },
+  bottomContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  avatarContainer: {
+    flexGrow: 0,
+    marginRight: 20,
+  },
+  contentContainer: {
+    flexGrow: 1,
+    flexShrink: 1,
+  },
+  nameText: {
+    marginBottom: 5,
+  },
+  descriptionText: {
+    flexGrow: 1,
+  },
+  avatar: {
+    width: 45,
+    height: 45,
+    borderRadius: theme.roundness,
+  },
+  countItem: {
+    flexGrow: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 15,
+  },
+  countItemCount: {
+    marginBottom: 5,
+  },
+  languageContainer: {
+    marginTop: 10,
+    flexDirection: 'row',
+  },
+  languageText: {
+    color: 'white',
+    backgroundColor: theme.colors.primary,
+    borderRadius: theme.roundness,
+    flexGrow: 0,
+    paddingVertical: 3,
+    paddingHorizontal: 6,
+  },
+});
 
-  const styles = StyleSheet.create({
-    entry: {
-      borderBottomWidth: 5,
-      padding: 10,
-      borderBottomColor: 'grey'
-    },
-    flexContainterRow: {
-      flexDirection: 'row',
-      display: 'flex',
-      flexGrow: 1
-    },
-    flexContainterColumn: {
-      flexDirection: 'column',
-      display: 'flex',
-      padding: 5,
-      flexGrow: 1
-    },
-    avatar: {
-      width: 70,
-      height: 70,
-      borderRadius: 10
-    },
-    language: {
-      backgroundColor: '#0366d6',
-      color: 'white',
-      borderRadius: 5,
-      padding: 3
-    },
-    stat: {
-      fontWeight: '700',
-      alignSelf: 'center'
-    },
-    explanation: {
-      color: 'grey',
-      alignSelf: 'center',
-      flexGrow: 1
-    }
-  })
+const CountItem = ({ label, count }) => {
+  return (
+    <View style={styles.countItem}>
+      <Text style={styles.countItemCount} fontWeight="bold">
+        {formatInThousands(count)}
+      </Text>
+      <Text color="textSecondary">{label}</Text>
+    </View>
+  );
+};
 
+const RepositoryItem = ({ repository }) => {
+  const {
+    fullName,
+    description,
+    language,
+    forksCount,
+    stargazersCount,
+    ratingAverage,
+    reviewCount,
+    ownerAvatarUrl,
+  } = repository;
 
-    return(
-      <View>
-        <View style={styles.entry}>
-          <View style={styles.flexContainterRow}>
-            <Image style={styles.avatar} source={{uri: item.ownerAvatarUrl}}/>
-            <View style={styles.flexContainterColumn}>
-              <Text fontWeight="bold">{item.fullName}</Text>
-              <Text>{item.description}</Text>
-              <View style={styles.flexContainterRow}><Text style={styles.language}>{item.language}</Text></View>
+  return (
+    <View style={styles.container}>
+      <View style={styles.topContainer}>
+        <View style={styles.avatarContainer}>
+          <Image source={{ uri: ownerAvatarUrl }} style={styles.avatar} />
+        </View>
+        <View style={styles.contentContainer}>
+          <Text
+            style={styles.nameText}
+            fontWeight="bold"
+            fontSize="subheading"
+            numberOfLines={1}
+          >
+            {fullName}
+          </Text>
+          <Text style={styles.descriptionText} color="textSecondary">
+            {description}
+          </Text>
+          {language ? (
+            <View style={styles.languageContainer}>
+              <Text style={styles.languageText}>{language}</Text>
             </View>
-          </View>
-          <View style={styles.flexContainterRow}>
-            <View style={styles.flexContainterColumn}>
-              <Text style={styles.stat}>{item.stargazersCount}</Text>
-              <Text style={styles.explanation}>Stars</Text>
-            </View>
-            <View style={styles.flexContainterColumn}>
-              <Text style={styles.stat}>{item.forksCount}</Text>
-              <Text style={styles.explanation}>Forks</Text>
-            </View>
-            <View style={styles.flexContainterColumn}>
-              <Text style={styles.stat}>{item.reviewCount}</Text>
-              <Text style={styles.explanation}>Reviews</Text>
-            </View>
-            <View style={styles.flexContainterColumn}>
-              <Text style={styles.stat}>{item.ratingAverage}</Text>
-              <Text style={styles.explanation}>Rating</Text>
-            </View>
-          </View>
+          ) : null}
         </View>
       </View>
-    )
-}
+      <View style={styles.bottomContainer}>
+        <CountItem count={stargazersCount} label="Stars" />
+        <CountItem count={forksCount} label="Forks" />
+        <CountItem count={reviewCount} label="Reviews" />
+        <CountItem count={ratingAverage} label="Rating" />
+      </View>
+    </View>
+  );
+};
 
-export default RepositoryItem
+export default RepositoryItem;
