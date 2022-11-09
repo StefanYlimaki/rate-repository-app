@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
 const CountItem = ({ label, count }) => {
   return (
     <View style={styles.countItem}>
-      <Text style={styles.countItemCount} fontWeight="bold">
+      <Text testID={label} style={styles.countItemCount} fontWeight="bold">
         {formatInThousands(count)}
       </Text>
       <Text color="textSecondary">{label}</Text>
@@ -83,13 +83,14 @@ const RepositoryItem = ({ repository }) => {
   } = repository;
 
   return (
-    <View style={styles.container}>
+    <View testID='repositoryItem' style={styles.container}>
       <View style={styles.topContainer}>
         <View style={styles.avatarContainer}>
           <Image source={{ uri: ownerAvatarUrl }} style={styles.avatar} />
         </View>
         <View style={styles.contentContainer}>
           <Text
+            testID="fullName"
             style={styles.nameText}
             fontWeight="bold"
             fontSize="subheading"
@@ -97,11 +98,11 @@ const RepositoryItem = ({ repository }) => {
           >
             {fullName}
           </Text>
-          <Text style={styles.descriptionText} color="textSecondary">
+          <Text testID="description" style={styles.descriptionText} color="textSecondary">
             {description}
           </Text>
           {language ? (
-            <View style={styles.languageContainer}>
+            <View testID="language" style={styles.languageContainer}>
               <Text style={styles.languageText}>{language}</Text>
             </View>
           ) : null}
