@@ -31,7 +31,8 @@ export default {
       favicon: "./assets/favicon.png"
     },
     extra: {
-      env: process.env.ENV
+      env: process.env.ENV,
+      apolloUri: "http://192.168.54.61:4000/graphql"
     },
  
   }
