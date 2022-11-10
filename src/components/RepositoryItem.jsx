@@ -2,7 +2,11 @@ import { View, Image, StyleSheet } from 'react-native';
 
 import theme from '../theme';
 import Text from './Text';
+import Button from './Button';
 import formatInThousands from '../utils/formatInThousands';
+
+import * as Linking from 'expo-linking';
+
 
 const styles = StyleSheet.create({
   container: {
@@ -70,7 +74,7 @@ const CountItem = ({ label, count }) => {
   );
 };
 
-const RepositoryItem = ({ repository }) => {
+const RepositoryItem = ({ repository, showUrl }) => {
   const {
     fullName,
     description,
@@ -80,41 +84,45 @@ const RepositoryItem = ({ repository }) => {
     ratingAverage,
     reviewCount,
     ownerAvatarUrl,
+    id
   } = repository;
 
   return (
-    <View testID='repositoryItem' style={styles.container}>
-      <View style={styles.topContainer}>
-        <View style={styles.avatarContainer}>
-          <Image source={{ uri: ownerAvatarUrl }} style={styles.avatar} />
+      <View testID='repositoryItem' style={styles.container}>
+        <View style={styles.topContainer}>
+          <View style={styles.avatarContainer}>
+            <Image source={{ uri: ownerAvatarUrl }} style={styles.avatar} />
+          </View>
+          <View style={styles.contentContainer}>
+            <Text
+              testID="fullName"
+              style={styles.nameText}
+              fontWeight="bold"
+              fontSize="subheading"
+              numberOfLines={1}
+            >
+              {fullName}
+            </Text>
+            <Text testID="description" style={styles.descriptionText} color="textSecondary">
+              {description}
+            </Text>
+            {language ? (
+              <View testID="language" style={styles.languageContainer}>
+                <Text style={styles.languageText}>{language}</Text>
+              </View>
+            ) : null}
+          </View>
         </View>
-        <View style={styles.contentContainer}>
-          <Text
-            testID="fullName"
-            style={styles.nameText}
-            fontWeight="bold"
-            fontSize="subheading"
-            numberOfLines={1}
-          >
-            {fullName}
-          </Text>
-          <Text testID="description" style={styles.descriptionText} color="textSecondary">
-            {description}
-          </Text>
-          {language ? (
-            <View testID="language" style={styles.languageContainer}>
-              <Text style={styles.languageText}>{language}</Text>
-            </View>
-          ) : null}
+        <View style={styles.bottomContainer}>
+          <CountItem count={stargazersCount} label="Stars" />
+          <CountItem count={forksCount} label="Forks" />
+          <CountItem count={reviewCount} label="Reviews" />
+          <CountItem count={ratingAverage} label="Rating" />
         </View>
+        { showUrl 
+          ? <Button onPress={() => Linking.openURL(repository.url)} >Open in Github</Button>
+          : <></> }
       </View>
-      <View style={styles.bottomContainer}>
-        <CountItem count={stargazersCount} label="Stars" />
-        <CountItem count={forksCount} label="Forks" />
-        <CountItem count={reviewCount} label="Reviews" />
-        <CountItem count={ratingAverage} label="Rating" />
-      </View>
-    </View>
   );
 };
 
